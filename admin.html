@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Celeste</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); }
+        input { background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6">
+
+    <!-- LOGIN -->
+    <div id="login-card" class="glass w-full max-w-sm rounded-[30px] p-8">
+        <h1 class="text-2xl font-black mb-6 text-green-500">Admin Access</h1>
+        <div class="space-y-4">
+            <input type="text" id="user" placeholder="Username" class="w-full p-4 rounded-xl outline-none">
+            <input type="password" id="pass" placeholder="Password" class="w-full p-4 rounded-xl outline-none">
+            <button onclick="login()" class="w-full bg-green-500 text-black font-black p-4 rounded-xl shadow-lg shadow-green-500/20">LOG IN</button>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dash-card" class="glass w-full max-w-lg rounded-[30px] p-8 hidden">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-xl font-black text-green-500">Global Settings</h1>
+            <div class="bg-green-500/10 text-green-500 text-[10px] font-bold px-3 py-1 rounded-full">ACTIVE</div>
+        </div>
+
+        <div class="space-y-6">
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Bank Name</label>
+                <input type="text" id="bank-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="e.g. Kuda MfB">
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Account Number</label>
+                <input type="text" id="num-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="3003423032">
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Account Name</label>
+                <input type="text" id="name-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="Business Name">
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Telegram Redirect URL</label>
+                <input type="text" id="link-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="https://t.me/...">
+            </div>
+
+            <button onclick="update()" id="up-btn" class="w-full bg-green-500 text-black font-black p-5 rounded-2xl transition hover:brightness-110">
+                SAVE & UPDATE WEBSITE
+            </button>
+        </div>
+    </div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = JSON.parse(window.__firebase_config || '{}');
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const appId = window.__app_id || 'celeste-main';
+
+    window.login = () => {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+        if(u === "admin" && p === "celeste2026") {
+            document.getElementById('login-card').classList.add('hidden');
+            document.getElementById('dash-card').classList.remove('hidden');
+            initDash();
+        } else { alert("Invalid Credentials"); }
+    };
+
+    async function initDash() {
+        await signInAnonymously(auth);
+        const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config'));
+        if(snap.exists()) {
+            const d = snap.data();
+            document.getElementById('bank-in').value = d.bankName || "";
+            document.getElementById('num-in').value = d.accountNumber || "";
+            document.getElementById('name-in').value = d.accountName || "";
+            document.getElementById('link-in').value = d.telegramLink || "";
+        }
+    }
+
+    window.update = async () => {
+        const btn = document.getElementById('up-btn');
+        btn.innerText = "UPDATING LIVE...";
+        btn.disabled = true;
+
+        const data = {
+            bankName: document.getElementById('bank-in').value,
+            accountNumber: document.getElementById('num-in').value,
+            accountName: document.getElementById('name-in').value,
+            telegramLink: document.getElementById('link-in').value
+        };
+
+        try {
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config'), data);
+            alert("WEBSITE UPDATED! All users will now see the new details.");
+        } catch (e) { alert("Error: " + e.message); }
+
+        btn.innerText = "SAVE & UPDATE WEBSITE";
+        btn.disabled = false;
+    };
+</script>
+</body>
+</html>
+
+
