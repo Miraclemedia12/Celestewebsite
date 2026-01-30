@@ -55,7 +55,6 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
-        /* Bright glass card specifically for Activity */
         .glass-card-bright {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -268,7 +267,7 @@
 <div class="dashboard-header">
     <div class="welcome-text">
         <h1 style="color:white">Dashboard</h1>
-        <p style="color:#666; font-size: 14px; margin-top: 5px;">Welcome back to your <br> Celeste account, <span id="user-display-name" style="color:var(--celeste-green)">User</span></p>
+        <p style="color:#666; font-size: 14px; margin-top: 5px;">Welcome back to your <br> <span style="color:var(--celeste-green); font-weight: 700;">CELESTE</span> account</p>
     </div>
     <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(5px); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
         <i class="fas fa-bell" style="color:#888"></i>
@@ -303,11 +302,11 @@
     <div class="space-y-4">
         <div class="flex justify-between border-b border-white/5 pb-3">
             <span style="color:#888">Plan Type:</span>
-            <span style="color:var(--celeste-gold); font-weight: 800;" id="dash-plan-name">Awaiting...</span>
+            <span style="color:#ff3e3e; font-weight: 800;">Inactive</span>
         </div>
         <div class="flex justify-between border-b border-white/5 pb-3">
             <span style="color:#888">Price:</span>
-            <span style="color:var(--celeste-gold); font-weight: 800;" id="dash-plan-price">Awaiting...</span>
+            <span style="color:#ff3e3e; font-weight: 800;">Inactive</span>
         </div>
         <div class="flex justify-between border-b border-white/5 pb-3">
             <span style="color:#888">Payment:</span>
@@ -315,7 +314,7 @@
         </div>
         <div class="flex justify-between pb-1">
             <span style="color:#888">Registered On:</span>
-            <span style="color:white; font-weight: 600;" id="dash-reg-date">31 Jan 2026</span>
+            <span style="color:white; font-weight: 600;" id="dash-reg-date">Awaiting...</span>
         </div>
     </div>
 
@@ -359,7 +358,7 @@
     </div>
 </div>
 
-<!-- Recent Activity - UPDATED BRIGHTER STYLE -->
+<!-- Recent Activity -->
 <div class="glass-card-bright mt-10">
     <div style="font-size: 18px; font-weight: 800; margin-bottom: 25px; color: white;">Recent Activity</div>
     <div class="space-y-6">
@@ -374,8 +373,8 @@
         <div class="flex gap-4 items-center">
             <div style="width:40px; height:40px; background:rgba(255, 204, 0, 0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--celeste-gold)"><i class="fas fa-tag"></i></div>
             <div>
-                <div style="font-weight:700; font-size:15px; color: white;">Plan Selected</div>
-                <div style="color:#aaa; font-size:12px;" id="activity-plan-type">Awaiting...</div>
+                <div style="font-weight:700; font-size:15px; color: white;">Registration Started</div>
+                <div style="color:#aaa; font-size:12px;">Identity verification pending</div>
             </div>
             <div style="margin-left:auto; color:#888; font-size:11px;">Just now</div>
         </div>
@@ -456,14 +455,13 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const userData = JSON.parse(localStorage.getItem('celesteUser') || '{}');
-        const userPlan = userData.plan || "Euro-Lite ₦8,500";
         
-        if(userData.fullName) {
-            document.getElementById('user-display-name').innerText = userData.fullName.split(' ')[0];
-        }
+        // Tracking ONLY the registration date correctly
+        document.getElementById('dash-reg-date').innerText = userData.joinedDate || "31 Jan 2026";
+        
+        setTimeout(cycleActivities, 2000);
+    });
+</script>
+</body>
+</html>
 
-        const planEl = document.getElementById('dash-plan-name');
-        const priceEl = document.getElementById('dash-plan-price');
-        const actPlanEl = document.getElementById('activity-plan-type');
-
-        if (userPlan.includes('14,
