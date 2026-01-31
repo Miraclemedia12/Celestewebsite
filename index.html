@@ -24,7 +24,7 @@
             scroll-behavior: smooth;
         }
 
-        /* TOPBAR */
+        /* TOPBAR - Refined for professional fit */
         .topbar {
             position: fixed;
             top: 0;
@@ -32,31 +32,32 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
+            padding: 0 5%;
             background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
             z-index: 1000;
             box-sizing: border-box;
-            border-bottom: 2px solid rgba(0, 255, 64, 0.2);
+            border-bottom: 1.5px solid rgba(0, 255, 64, 0.2);
+            height: 65px; /* Slimmer header */
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px; /* Space between logo image and text */
             text-decoration: none;
         }
 
         .logo-img {
-            height: 45px;
+            height: 32px; /* Professional height */
             width: auto;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 64, 0.6));
+            filter: drop-shadow(0 0 8px rgba(0, 255, 64, 0.4));
         }
 
         .logo-text {
-            font-size: 32px;
+            font-size: 20px; /* Balanced text size */
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             background: linear-gradient(90deg, #00ff40, #fff, #00ff40);
             background-size: 200% auto;
@@ -69,24 +70,27 @@
             to { background-position: 200% center; }
         }
 
+        /* Compact JOIN NOW Button */
         .main-join-btn {
             background: var(--primary-green);
             color: black;
-            padding: 12px 25px;
-            border-radius: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
             text-decoration: none;
-            font-weight: 900;
-            font-size: 14px;
+            font-weight: 800;
+            font-size: 12px;
             text-transform: uppercase;
-            transition: 0.3s;
-            box-shadow: 0 0 15px rgba(0, 255, 64, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 255, 64, 0.2);
             border: none;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .main-join-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(0, 255, 64, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(0, 255, 64, 0.3);
+            filter: brightness(1.1);
         }
 
         .box-btn {
@@ -122,7 +126,7 @@
         }
 
         .video-box {
-            margin-top: 130px;
+            margin-top: 105px; /* Offset for slim topbar */
             margin-bottom: 40px;
             background: var(--glass);
             border: 2px solid var(--primary-green);
@@ -199,7 +203,6 @@
             gap: 10px;
         }
 
-        /* Styling for internal icons */
         .work-box p i {
             color: var(--primary-green);
             margin-right: 5px;
@@ -336,6 +339,10 @@
         .copyright { margin-top: 60px; text-align: center; border-top: 1px solid #111; padding-top: 30px; color: #444; font-size: 12px; text-transform: uppercase; }
 
         @media (max-width: 768px) {
+            .topbar { padding: 0 4%; }
+            .logo-text { font-size: 16px; letter-spacing: 1px; }
+            .logo-img { height: 26px; }
+            .main-join-btn { padding: 6px 12px; font-size: 10px; }
             .footer-grid { grid-template-columns: 1fr; gap: 40px; }
             .trust-section { flex-direction: column; text-align: center; }
             .work-box { min-height: auto; }
@@ -346,15 +353,15 @@
 
     <div class="topbar">
         <a href="index.html" class="logo-container">
-            <img src="logo.png" alt="C" class="logo-img" onerror="this.src='https://via.placeholder.com/45/00ff40/000000?text=C'">
+            <img src="logo.png" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/32/00ff40/000000?text=C'">
             <div class="logo-text">CELESTE</div>
         </a>
-        <a href="reward.html" class="main-join-btn">JOIN CELESTE</a>
+        <a href="reward.html" class="main-join-btn">JOIN NOW</a>
     </div>
 
     <div id="about-section" class="unified-container video-box">
         <video src="video.mp4" poster="hero1.jpg" controls playsinline></video>
-        <a href="reward.html" class="main-join-btn">JOIN NOW <i class="fas fa-fire"></i></a>
+        <a href="reward.html" class="main-join-btn" style="padding: 15px 30px; font-size: 16px; border-radius: 12px;">JOIN CELESTE NOW <i class="fas fa-fire"></i></a>
     </div>
 
     <div id="features-section" class="unified-container bright-header">
@@ -374,7 +381,7 @@
                 - <i class="fas fa-share-nodes"></i> Share the Live
                 - <i class="fas fa-chart-line"></i> Stay active and engage
                 <i class="fas fa-arrow-right"></i> Earn up to €2 per tap</p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
 
             <!-- Box 2 -->
@@ -385,7 +392,7 @@
                 2 Easy Ways to Earn:
                 1. <i class="fas fa-circle-play"></i> Telegram Stories – Earn €1 per view
                 2. <i class="fas fa-vault"></i> Stake Your Euros – Grow your earnings automatically with the CELESTE bot <i class="fas fa-robot"></i></p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
 
             <!-- Box 3 -->
@@ -396,7 +403,7 @@
                 No skills, no content creation required.
                 Earn up to €10 daily just by engaging.
                 Entertainment now pays. CELESTE makes it real. <i class="fas fa-bolt"></i></p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
 
             <!-- Box 4 -->
@@ -410,7 +417,7 @@
                 - <i class="fas fa-comment"></i> Comment on posts – €4
                 - <i class="fas fa-retweet"></i> Retweet content – €5
                 - <i class="fas fa-user-check"></i> Consistent engagement – €3</p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
 
             <!-- Box 5 -->
@@ -423,7 +430,7 @@
                 - <i class="fas fa-bell"></i> Exclusive updates
                 - <i class="fas fa-microphone"></i> Live discussions
                 - <i class="fas fa-medal"></i> Real-time rewards for participation</p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
 
             <!-- Box 6 -->
@@ -436,7 +443,7 @@
                 - <i class="fas fa-cloud-arrow-up"></i> Upload it on CELESTE
                 - <i class="fas fa-money-bill-trend-up"></i> Earn €2.5 (₦5,000) per photo
                 Simple. Fast. Profitable.</p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
 
             <!-- Box 7 -->
@@ -448,7 +455,7 @@
                 - <i class="fas fa-trophy"></i> Compete and stay active
                 - <i class="fas fa-wallet"></i> Earn €50 to €100 per game
                 Fun meets opportunity. Play smart. Earn Euro. <i class="fas fa-rocket"></i></p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
 
             <!-- Box 8 -->
@@ -458,7 +465,7 @@
                 <p>CELESTE is officially registered with the Corporate Affairs Commission (CAC) Nigeria, confirming our legal status.
                 This certification shows that CELESTE is a recognized digital platform built for structured opportunities and innovation.
                 <i class="fas fa-check-double"></i> Registered. Verified. Trusted.</p>
-                <a href="reward.html" class="box-btn">GET CELESTE PASS</a>
+                <a href="reward.html" class="box-btn">GET STARTED</a>
             </div>
         </div>
     </div>
@@ -518,6 +525,10 @@
             <div style="padding: 22px; color: #aaa;">Celeste is a global ecosystem. While CAC certified in Nigeria, it is accessible from anywhere in the world.</div>
         </details>
         <details>
+   <summary>Is Celeste available in my country?</summary>
+            <div style="padding: 22px; color: #aaa;">Celeste is a global ecosystem. While CAC certified in Nigeria, it is accessible from anywhere in the world.</div>
+        </details>
+        <details>
             <summary>Can I earn from multiple activities?</summary>
             <div style="padding: 22px; color: #aaa;">Absolutely. You can earn from watching videos, chatting, and sharing content simultaneously. No caps.</div>
         </details>
@@ -527,7 +538,7 @@
         <div class="unified-container footer-grid">
             <div class="footer-brand">
                 <div class="logo-container" style="margin-bottom: 20px;">
-                    <img src="logo.png" alt="C" class="logo-img" onerror="this.src='https://via.placehold.com/40/00ff40/000000?text=C'">
+                    <img src="logo.png" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/40/00ff40/000000?text=C'">
                     <div class="logo-text">CELESTE</div>
                 </div>
                 <p>Celeste is an innovation ecosystem connecting people, creating opportunities, and rewarding engagement.</p>
