@@ -17,51 +17,29 @@
 </head>
 <body class="flex items-center justify-center min-h-screen p-6">
 
-    <!-- LOGIN CARD -->
     <div id="login-card" class="glass w-full max-w-sm rounded-[30px] p-8">
         <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-black">
-                <i class="fas fa-lock"></i>
-            </div>
+            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-black"><i class="fas fa-lock"></i></div>
             <h1 class="text-2xl font-black text-green-500">Admin Access</h1>
         </div>
         <div class="space-y-4">
             <input type="text" id="user" placeholder="Username" class="w-full p-4 rounded-xl outline-none">
             <input type="password" id="pass" placeholder="Password" class="w-full p-4 rounded-xl outline-none">
-            <button id="login-btn" onclick="handleLogin()" class="w-full bg-green-500 text-black font-black p-4 rounded-xl shadow-lg shadow-green-500/20 active:scale-95 transition">LOG IN</button>
+            <button id="login-btn" onclick="handleLogin()" class="w-full bg-green-500 text-black font-black p-4 rounded-xl shadow-lg active:scale-95 transition">LOG IN</button>
         </div>
     </div>
 
-    <!-- DASHBOARD CARD -->
     <div id="dash-card" class="glass w-full max-w-lg rounded-[30px] p-8 hidden">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-xl font-black text-green-500">Global Settings</h1>
-            <div class="bg-green-500/10 text-green-500 text-[10px] font-bold px-3 py-1 rounded-full border border-green-500/20">LIVE CONTROL</div>
+            <div class="bg-green-500/10 text-green-500 text-[10px] font-bold px-3 py-1 rounded-full border border-green-500/20 uppercase">Live Control</div>
         </div>
-
         <div class="space-y-5">
-            <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Bank Name</label>
-                <input type="text" id="bank-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="e.g. KUDA MfB">
-            </div>
-            <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Account Number</label>
-                <input type="text" id="num-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="3003423032">
-            </div>
-            <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Account Name</label>
-                <input type="text" id="name-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="Business Name">
-            </div>
-            <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Telegram Redirect URL</label>
-                <input type="text" id="link-in" class="w-full p-4 mt-1 rounded-xl outline-none" placeholder="https://t.me/CELESTE_OFFICIAL2">
-            </div>
-
-            <div class="pt-4">
-                <button onclick="handleUpdate()" id="up-btn" class="w-full bg-green-500 text-black font-black p-5 rounded-2xl transition hover:brightness-110 shadow-lg shadow-green-500/20">
-                    SAVE & UPDATE WEBSITE
-                </button>
-            </div>
+            <div><label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Bank Name</label><input type="text" id="bank-in" class="w-full p-4 mt-1 rounded-xl outline-none"></div>
+            <div><label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Account Number</label><input type="text" id="num-in" class="w-full p-4 mt-1 rounded-xl outline-none"></div>
+            <div><label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Account Name</label><input type="text" id="name-in" class="w-full p-4 mt-1 rounded-xl outline-none"></div>
+            <div><label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Telegram Redirect URL</label><input type="text" id="link-in" class="w-full p-4 mt-1 rounded-xl outline-none"></div>
+            <div class="pt-4"><button onclick="handleUpdate()" id="up-btn" class="w-full bg-green-500 text-black font-black p-5 rounded-2xl transition hover:brightness-110">SAVE & UPDATE WEBSITE</button></div>
         </div>
     </div>
 
@@ -70,91 +48,56 @@
     import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Setup configuration - checking for injected config or default
-    const firebaseConfig = typeof window.__firebase_config !== 'undefined' 
-        ? JSON.parse(window.__firebase_config) 
-        : { /* Fallback empty config */ };
+    const firebaseConfig = {
+        apiKey: "AIzaSyAyMQQK0qbw1lpeuPcPmFgSpBoy1yFKFJE",
+        authDomain: "celeste-website.firebaseapp.com",
+        projectId: "celeste-website",
+        storageBucket: "celeste-website.firebasestorage.app",
+        messagingSenderId: "181088900219",
+        appId: "1:181088900219:web:eb1fedd04dc0cf676b7ede"
+    };
     
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const appId = typeof window.__app_id !== 'undefined' ? window.__app_id : 'default-app-id';
+    const appId = "celeste-main";
 
-    // Explicitly attaching to window so onclick works with type="module"
     window.handleLogin = () => {
         const u = document.getElementById('user').value;
         const p = document.getElementById('pass').value;
-        const btn = document.getElementById('login-btn');
-
         if(u === "admin" && p === "celeste2026") {
-            btn.innerText = "VERIFYING...";
-            btn.classList.add('btn-loading');
-            
-            // Proceed to dashboard
-            setTimeout(() => {
-                document.getElementById('login-card').classList.add('hidden');
-                document.getElementById('dash-card').classList.remove('hidden');
-                initDash();
-            }, 800);
-        } else {
-            alert("Invalid Credentials");
-        }
+            document.getElementById('login-card').classList.add('hidden');
+            document.getElementById('dash-card').classList.remove('hidden');
+            initDash();
+        } else { alert("Invalid Credentials"); }
     };
 
     async function initDash() {
-        try {
-            await signInAnonymously(auth);
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'config');
-            const snap = await getDoc(docRef);
-            
-            if(snap.exists()) {
-                const d = snap.data();
-                document.getElementById('bank-in').value = d.bankName || "";
-                document.getElementById('num-in').value = d.accountNumber || "";
-                document.getElementById('name-in').value = d.accountName || "";
-                document.getElementById('link-in').value = d.telegramLink || "";
-            }
-        } catch (error) {
-            console.error("Firebase Init Error:", error);
+        await signInAnonymously(auth);
+        const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config'));
+        if(snap.exists()) {
+            const d = snap.data();
+            document.getElementById('bank-in').value = d.bankName || "";
+            document.getElementById('num-in').value = d.accountNumber || "";
+            document.getElementById('name-in').value = d.accountName || "";
+            document.getElementById('link-in').value = d.telegramLink || "";
         }
     }
 
     window.handleUpdate = async () => {
         const btn = document.getElementById('up-btn');
-        const originalText = btn.innerText;
-        
-        btn.innerText = "UPDATING LIVE...";
-        btn.disabled = true;
-        btn.classList.add('btn-loading');
-
-        const data = {
-            bankName: document.getElementById('bank-in').value,
-            accountNumber: document.getElementById('num-in').value,
-            accountName: document.getElementById('name-in').value,
-            telegramLink: document.getElementById('link-in').value,
-            updatedAt: new Date().toISOString()
-        };
-
+        btn.innerText = "UPDATING..."; btn.disabled = true;
         try {
-            // Guard query with user check
-            if (!auth.currentUser) await signInAnonymously(auth);
-            
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config'), data);
-            
-            // Custom modal replacement since alert is blocked in some environments
-            const msg = document.createElement('div');
-            msg.className = "fixed top-10 left-1/2 -translate-x-1/2 bg-green-500 text-black px-6 py-3 rounded-full font-bold z-[10000] shadow-2xl";
-            msg.innerText = "WEBSITE UPDATED SUCCESSFULLY!";
-            document.body.appendChild(msg);
-            setTimeout(() => msg.remove(), 3000);
-            
-        } catch (e) { 
-            alert("Error: " + e.message); 
-        } finally {
-            btn.innerText = originalText;
-            btn.disabled = false;
-            btn.classList.remove('btn-loading');
-        }
+            if(!auth.currentUser) await signInAnonymously(auth);
+            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config'), {
+                bankName: document.getElementById('bank-in').value,
+                accountNumber: document.getElementById('num-in').value,
+                accountName: document.getElementById('name-in').value,
+                telegramLink: document.getElementById('link-in').value
+            });
+            alert("Website Updated Successfully!");
+        } catch (e) { alert("Error: " + e.message); }
+        btn.innerText = "SAVE & UPDATE WEBSITE"; btn.disabled = false;
     };
 </script>
 </body>
