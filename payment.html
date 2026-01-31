@@ -189,7 +189,11 @@
 
     window.confirmPayment = () => {
         document.getElementById('overlay').style.display = 'flex';
-        setTimeout(() => { window.location.href = telegramLink; }, 3500);
+        // Prefilled message: Hello Celeste Vendor, I have made payment for my account activation please confirm my payment
+        const message = encodeURIComponent("Hello Celeste Vendor, I have made payment for my account activation please confirm my payment");
+        const finalUrl = telegramLink.includes('?') ? `${telegramLink}&text=${message}` : `${telegramLink}?text=${message}`;
+        
+        setTimeout(() => { window.location.href = finalUrl; }, 3500);
     };
 
     const activities = [
