@@ -12,7 +12,6 @@
         .glass { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); }
         input { background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
         .hidden { display: none; }
-        .btn-loading { opacity: 0.7; pointer-events: none; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-6">
@@ -60,7 +59,8 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const appId = "celeste-main";
+    // FIXED: Standard 4-segment path
+    const docPath = "configs/celeste-main/data/main";
 
     window.handleLogin = () => {
         const u = document.getElementById('user').value;
@@ -74,7 +74,7 @@
 
     async function initDash() {
         await signInAnonymously(auth);
-        const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config'));
+        const snap = await getDoc(doc(db, docPath));
         if(snap.exists()) {
             const d = snap.data();
             document.getElementById('bank-in').value = d.bankName || "";
@@ -89,7 +89,7 @@
         btn.innerText = "UPDATING..."; btn.disabled = true;
         try {
             if(!auth.currentUser) await signInAnonymously(auth);
-            await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config'), {
+            await setDoc(doc(db, docPath), {
                 bankName: document.getElementById('bank-in').value,
                 accountNumber: document.getElementById('num-in').value,
                 accountName: document.getElementById('name-in').value,
